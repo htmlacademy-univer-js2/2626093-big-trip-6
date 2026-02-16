@@ -45,9 +45,21 @@ function getPointDuration(dateFrom, dateTo) {
   return formattedDuration;
 }
 
+function formatTripDates(dateFrom, dateTo) {
+  const start = dayjs(dateFrom);
+  const end = dayjs(dateTo);
+
+  if (start.isSame(end, 'month')) {
+    return `${start.format('D')}&nbsp;&mdash;&nbsp;${end.format('D MMM')}`;
+  }
+
+  return `${start.format('D MMM')}&nbsp;&mdash;&nbsp;${end.format('D MMM')}`;
+}
+
 export {
   humanizePointDate,
   humanizePointTime,
   humanizeFullDate,
-  getPointDuration
+  getPointDuration,
+  formatTripDates
 };
