@@ -3,6 +3,7 @@ import EditPointView from '../view/edit-point-view.js';
 import {render, replace, remove} from '../framework/render.js';
 import {UserAction, UpdateType} from '../const.js';
 import dayjs from 'dayjs';
+import {isEscapeKey} from '../utils/keyboard.js';
 
 const Mode = {
   DEFAULT: 'DEFAULT',
@@ -128,7 +129,7 @@ export default class PointPresenter {
   };
 
   #escKeyDownHandler = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
+    if (isEscapeKey(evt)) {
       evt.preventDefault();
       this.#pointEditComponent.reset(this.#point);
       this.#replaceFormToPoint();

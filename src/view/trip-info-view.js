@@ -1,5 +1,6 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {getTripTitle, getTripDates, getTripCost} from '../utils/trip-info.js';
+import {escapeHtml} from '../utils/html.js';
 
 function createTripInfoTemplate(points, destinations, offers) {
   const tripTitle = getTripTitle(points, destinations);
@@ -9,9 +10,9 @@ function createTripInfoTemplate(points, destinations, offers) {
   return (
     `<section class="trip-main__trip-info  trip-info">
       <div class="trip-info__main">
-        <h1 class="trip-info__title">${tripTitle}</h1>
+        <h1 class="trip-info__title">${escapeHtml(tripTitle)}</h1>
 
-        <p class="trip-info__dates">${tripDates}</p>
+        <p class="trip-info__dates">${escapeHtml(tripDates)}</p>
       </div>
 
       <p class="trip-info__cost">
