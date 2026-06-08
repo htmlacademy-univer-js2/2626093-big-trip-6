@@ -2,6 +2,7 @@ import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import flatpickr from 'flatpickr';
 import {POINT_TYPES} from '../const.js';
 import {humanizeFullDate} from '../utils/date.js';
+import {escapeHtml} from '../utils/html.js';
 
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -25,8 +26,8 @@ function createEditPointTemplate(point, destinations, offers) {
   const pointTypeOffers = offers.find((offer) => offer.type === type);
   const currentPointOffers = pointTypeOffers ? pointTypeOffers.offers : [];
 
-  const destinationName = pointDestination ? pointDestination.name : '';
-  const destinationDescription = pointDestination ? pointDestination.description : '';
+  const destinationName = pointDestination ? escapeHtml(pointDestination.name) : '';
+  const destinationDescription = pointDestination ? escapeHtml(pointDestination.description) : '';
   const destinationPictures = pointDestination ? pointDestination.pictures : [];
 
   const typeList = POINT_TYPES.map((pointType) => `
@@ -42,18 +43,18 @@ function createEditPointTemplate(point, destinations, offers) {
       <div class="event__offer-selector">
         <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}-${pointId}" type="checkbox" name="event-offer-${offer.id}" ${isChecked} data-offer-id="${offer.id}" ${isFormDisabled ? 'disabled' : ''}>
         <label class="event__offer-label" for="event-offer-${offer.id}-${pointId}">
-          <span class="event__offer-title">${offer.title}</span>
+          <span class="event__offer-title">${escapeHtml(offer.title)}</span>
           &plus;&euro;&nbsp;
-          <span class="event__offer-price">${offer.price}</span>
+          <span class="event__offer-price">${escapeHtml(offer.price)}</span>
         </label>
       </div>
     `;
   }).join('');
 
-  const destinationOptions = destinations.map((dest) => `<option value="${dest.name}"></option>`).join('');
+  const destinationOptions = destinations.map((dest) => `<option value="${escapeHtml(dest.name)}"></option>`).join('');
 
   const picturesList = destinationPictures.map((pic) => `
-    <img class="event__photo" src="${pic.src}" alt="${pic.description}">
+    <img class="event__photo" src="${escapeHtml(pic.src)}" alt="${escapeHtml(pic.description)}">
   `).join('');
 
   let resetButtonLabel;
