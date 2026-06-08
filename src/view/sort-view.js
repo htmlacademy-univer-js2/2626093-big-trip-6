@@ -26,8 +26,8 @@ function createSortTemplate(currentSortType) {
 
 export default class SortView extends AbstractView {
   #currentSortType = null;
+
   #handleSortTypeChange = null;
-  #currentSortType = null;
 
   constructor({currentSortType, onSortTypeChange}) {
     super();

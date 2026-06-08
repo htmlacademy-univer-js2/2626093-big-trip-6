@@ -12,18 +12,12 @@ const siteMainElement = document.querySelector('.page-main');
 const siteHeaderElement = document.querySelector('.page-header');
 const tripMainElement = siteHeaderElement.querySelector('.trip-main');
 const tripControlsFilters = siteHeaderElement.querySelector('.trip-controls__filters');
-const tripMainElement = siteHeaderElement.querySelector('.trip-main');
 const tripEventsElement = siteMainElement.querySelector('.trip-events');
 
 const pointsModel = new PointsModel({
   pointsApiService: new PointsApiService(END_POINT, AUTHORIZATION)
 });
 const filterModel = new FilterModel();
-
-const tripInfoPresenter = new TripInfoPresenter({
-  tripInfoContainer: tripMainElement,
-  pointsModel,
-});
 
 const boardPresenter = new BoardPresenter({
   boardContainer: tripEventsElement,
@@ -55,7 +49,6 @@ const handleNewPointButtonClick = () => {
 document.querySelector('.trip-main__event-add-btn').disabled = true;
 document.querySelector('.trip-main__event-add-btn').addEventListener('click', handleNewPointButtonClick);
 
-tripInfoPresenter.init();
 filterPresenter.init();
 boardPresenter.init();
 tripInfoPresenter.init();
