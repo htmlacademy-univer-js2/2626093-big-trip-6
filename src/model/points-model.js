@@ -32,18 +32,42 @@ export default class PointsModel extends Observable {
    * Initialize model by fetching data
    */
   async init() {
-    try {
-      const points = await this.#pointsApiService.points;
-      this.#destinations = await this.#pointsApiService.destinations;
-      this.#offers = await this.#pointsApiService.offers;
-      this.#points = points.map(this.#adaptToClient);
-      this._notify(UpdateType.INIT);
-    } catch(err) {
+    await new Promise((resolve) => {
+      requestAnimationFrame(() => {
+        requestAnimationFrame(resolve);
+      });
+    });
+
+    let isError = false;
+
+    const [pointsResult, destinationsResult, offersResult] = await Promise.allSettled([
+      this.#pointsApiService.points,
+      this.#pointsApiService.destinations,
+      this.#pointsApiService.offers,
+    ]);
+
+    if (pointsResult.status === 'fulfilled') {
+      this.#points = pointsResult.value.map(this.#adaptToClient);
+    } else {
+      isError = true;
       this.#points = [];
-      this.#destinations = [];
-      this.#offers = [];
-      this._notify(UpdateType.INIT, {isError: true});
     }
+
+    if (destinationsResult.status === 'fulfilled') {
+      this.#destinations = destinationsResult.value;
+    } else {
+      isError = true;
+      this.#destinations = [];
+    }
+
+    if (offersResult.status === 'fulfilled') {
+      this.#offers = offersResult.value;
+    } else {
+      isError = true;
+      this.#offers = [];
+    }
+
+    this._notify(UpdateType.INIT, {isError});
   }
 
   /**
