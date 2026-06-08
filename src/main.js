@@ -19,11 +19,6 @@ const pointsModel = new PointsModel({
 });
 const filterModel = new FilterModel();
 
-const tripInfoPresenter = new TripInfoPresenter({
-  tripInfoContainer: tripMainElement,
-  pointsModel,
-});
-
 const boardPresenter = new BoardPresenter({
   boardContainer: tripEventsElement,
   pointsModel,
@@ -33,6 +28,11 @@ const boardPresenter = new BoardPresenter({
 const filterPresenter = new FilterPresenter({
   filterContainer: tripControlsFilters,
   filterModel,
+  pointsModel,
+});
+
+const tripInfoPresenter = new TripInfoPresenter({
+  tripInfoContainer: tripMainElement,
   pointsModel,
 });
 
@@ -49,9 +49,9 @@ const handleNewPointButtonClick = () => {
 document.querySelector('.trip-main__event-add-btn').disabled = true;
 document.querySelector('.trip-main__event-add-btn').addEventListener('click', handleNewPointButtonClick);
 
-tripInfoPresenter.init();
 filterPresenter.init();
 boardPresenter.init();
+tripInfoPresenter.init();
 pointsModel.init()
   .finally(() => {
     document.querySelector('.trip-main__event-add-btn').disabled = false;

@@ -79,7 +79,19 @@ export default class BoardPresenter {
   createPoint(callback) {
     this.#currentSortType = SortType.DAY;
     this.#filterModel.setFilter(UpdateType.MAJOR, FilterType.EVERYTHING);
-    this.#newPointPresenter.init(callback, this.destinations, this.offers);
+
+    if (this.#pointsModel.points.length === 0) {
+      remove(this.#listEmptyComponent);
+      this.#renderEventList();
+    }
+
+    this.#newPointPresenter.init(() => {
+      if (this.#pointsModel.points.length === 0) {
+        remove(this.#eventListComponent);
+        this.#renderBoard();
+      }
+      callback();
+    }, this.destinations, this.offers);
   }
 
   #handleModeChange = () => {

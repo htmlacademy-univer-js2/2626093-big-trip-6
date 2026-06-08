@@ -25,7 +25,7 @@ function createFilterTemplate(filters, currentFilterType) {
     .join('');
 
   return (
-    `<form class="trip-filters" action="#" method="get">
+    `<form class="trip-filters" action="#" method="get" autocomplete="off" novalidate>
       ${filterItemsTemplate}
       <button class="visually-hidden" type="submit">Accept filter</button>
     </form>`
