@@ -1,4 +1,5 @@
 import dayjs from 'dayjs';
+import {getDestinationById, getOffersByType} from './point.js';
 import {sortPointDay} from './sort.js';
 
 const DESTINATION_NAMES_MAX_COUNT = 3;
@@ -7,7 +8,7 @@ export const getTripTitle = (points, destinations) => {
   const sortedPoints = [...points].sort(sortPointDay);
 
   const destinationNames = sortedPoints.map((point) => {
-    const destination = destinations.find((dest) => dest.id === point.destination);
+    const destination = getDestinationById(destinations, point.destination);
     return destination ? destination.name : (point.destination && point.destination.name) || point.destination || '';
   });
 
@@ -41,7 +42,7 @@ export const getTripDates = (points) => {
 
 export const getTripCost = (points, offers) => points.reduce((total, point) => {
   let cost = point.basePrice;
-  const pointOffers = offers.find((offer) => offer.type === point.type);
+  const pointOffers = getOffersByType(offers, point.type);
 
   if (pointOffers && point.offers.length > 0) {
     point.offers.forEach((offerId) => {
