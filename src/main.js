@@ -8,11 +8,20 @@ import PointsApiService from './points-api-service.js';
 const AUTHORIZATION = `Basic ${Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15)}`;
 const END_POINT = 'https://24.objects.htmlacademy.pro/big-trip';
 
-const siteMainElement = document.querySelector('.page-main');
-const siteHeaderElement = document.querySelector('.page-header');
-const tripMainElement = siteHeaderElement.querySelector('.trip-main');
-const tripControlsFilters = siteHeaderElement.querySelector('.trip-controls__filters');
-const tripEventsElement = siteMainElement.querySelector('.trip-events');
+const SELECTORS = {
+  PAGE_MAIN: '.page-main',
+  PAGE_HEADER: '.page-header',
+  TRIP_MAIN: '.trip-main',
+  TRIP_CONTROLS_FILTERS: '.trip-controls__filters',
+  TRIP_EVENTS: '.trip-events',
+  NEW_POINT_BUTTON: '.trip-main__event-add-btn',
+};
+
+const siteMainElement = document.querySelector(SELECTORS.PAGE_MAIN);
+const siteHeaderElement = document.querySelector(SELECTORS.PAGE_HEADER);
+const tripMainElement = siteHeaderElement.querySelector(SELECTORS.TRIP_MAIN);
+const tripControlsFilters = siteHeaderElement.querySelector(SELECTORS.TRIP_CONTROLS_FILTERS);
+const tripEventsElement = siteMainElement.querySelector(SELECTORS.TRIP_EVENTS);
 
 const pointsModel = new PointsModel({
   pointsApiService: new PointsApiService(END_POINT, AUTHORIZATION)

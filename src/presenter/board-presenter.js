@@ -136,6 +136,7 @@ export default class BoardPresenter {
     switch (updateType) {
       case UpdateType.PATCH:
         this.#pointPresenters.get(data.id).init(data, this.destinations, this.offers);
+        this.#pointPresenters.get(data.id).resetView();
         break;
       case UpdateType.MINOR:
         this.#clearBoard();

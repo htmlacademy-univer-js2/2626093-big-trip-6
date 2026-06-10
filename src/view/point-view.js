@@ -1,11 +1,12 @@
 import AbstractView from '../framework/view/abstract-view.js';
 import {humanizePointDate, humanizePointTime, getPointDuration} from '../utils/date.js';
 import {escapeHtml} from '../utils/html.js';
+import {getDestinationById, getOffersByType} from '../utils/point.js';
 
 function createPointTemplate(point, destinations, offers) {
   const {basePrice, dateFrom, dateTo, isFavorite, type} = point;
-  const pointDestination = destinations.find((dest) => dest.id === point.destination);
-  const pointTypeOffers = offers.find((offer) => offer.type === type);
+  const pointDestination = getDestinationById(destinations, point.destination);
+  const pointTypeOffers = getOffersByType(offers, type);
   const pointOffers = pointTypeOffers ? pointTypeOffers.offers : [];
   const selectedOffers = pointOffers.filter((offer) => point.offers.includes(offer.id));
 

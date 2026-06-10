@@ -28,6 +28,14 @@ export default class PointsModel extends Observable {
     return this.#offers;
   }
 
+  getDestinationById(destinationId) {
+    return this.#destinations.find((destination) => destination.id === destinationId);
+  }
+
+  getOffersByType(type) {
+    return this.#offers.find((offer) => offer.type === type);
+  }
+
   /**
    * Initialize model by fetching data
    */

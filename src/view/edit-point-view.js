@@ -3,6 +3,7 @@ import flatpickr from 'flatpickr';
 import {POINT_TYPES} from '../const.js';
 import {humanizeFullDate} from '../utils/date.js';
 import {escapeHtml} from '../utils/html.js';
+import {getDestinationById, getOffersByType} from '../utils/point.js';
 
 import 'flatpickr/dist/flatpickr.min.css';
 
@@ -22,8 +23,8 @@ function createEditPointTemplate(point, destinations, offers) {
   // unique suffix for IDs
   const pointId = id || 'new';
 
-  const pointDestination = destinations.find((dest) => dest.id === point.destination);
-  const pointTypeOffers = offers.find((offer) => offer.type === type);
+  const pointDestination = getDestinationById(destinations, point.destination);
+  const pointTypeOffers = getOffersByType(offers, type);
   const currentPointOffers = pointTypeOffers ? pointTypeOffers.offers : [];
 
   const destinationName = pointDestination ? escapeHtml(pointDestination.name) : '';
